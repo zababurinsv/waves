@@ -3,9 +3,9 @@ let config = {}
 config['now'] = 'http://localhost:3000'
 
 config['mongo'] = {}
-config['mongo']['web'] = 'https://mongo.zababurinsv.now.sh'
+config['mongo']['web'] = 'https://mongo.now.sh/'
 config['mongo']['local'] = 'http://localhost:3003'
-config['mongo']['cell'] = 'https://mongo.zababurinsv.now.sh'
+config['mongo']['cell'] = 'https://mongo.now.sh/'
 
 config['waves'] = {}
 config['waves']['web'] = 'https://waves.zababurinsv.now.sh'
@@ -71,7 +71,7 @@ config['account']['web'] = 'https://account.zababurinsv.now.sh'
 config['account']['cell'] = 'https://account.zababurinsv.now.sh'
 config['account']['dapp'] = '3N8n4Lc8BMsPPyVHJXTivQWs7ER61bB7wQn'
 config['account']['this'] = `${config['account']['dappaddress']}?matches=`
-config['account']['testnodes'] = 'https://testnodes.wavesnodes.com'
+config['account']['testnodes'] = 'https://pool.testnet.wavesnodes.com'
 config['account']['sse'] = 'https://account.zababurinsv.now.sh/stream'
 
 

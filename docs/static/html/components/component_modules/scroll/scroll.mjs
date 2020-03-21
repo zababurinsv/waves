@@ -12,7 +12,7 @@ export default  (obj, func, ...args)=>{
             case 'set':
                 (async (obj, props,data) => {
                     try {
-                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'scroll':
                                 (async (obj, props,data) => {

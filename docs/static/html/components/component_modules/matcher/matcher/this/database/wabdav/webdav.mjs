@@ -138,7 +138,7 @@ export default  (obj, func, ...args)=>{
             case 'set':
                 (async (obj, props,data) => {
                     try {
-                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'request':
                                 (async (obj, props,data) => {
@@ -202,7 +202,7 @@ export default  (obj, func, ...args)=>{
 
                     (async (obj, props,data) => {
                         try {
-                            console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                            // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                             switch (obj[props]) {
                                 case 'list':
                                     (async (obj, props,data) => {
@@ -252,7 +252,7 @@ export default  (obj, func, ...args)=>{
             case 'get':
                 (async (obj, props,data) => {
                     try {
-                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'components':
                                 (async (obj, props,data) => {
@@ -320,7 +320,7 @@ export default  (obj, func, ...args)=>{
             case 'delete':
                 (async (obj, props,data) => {
                     try {
-                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'moderator':
                                         if(!obj['path']){
@@ -342,7 +342,7 @@ export default  (obj, func, ...args)=>{
             case 'update':
                 (async (obj, props,data) => {
                     try {
-                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'components':
                                 if(!obj['path']){

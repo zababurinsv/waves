@@ -1,5 +1,4 @@
 import matcher from '/static/html/components/component_modules/matcher/matcher.mjs'
-import tick from '/static/html/components/component_modules/lacerta-tick/lacerta-tick.mjs'
 import utils from '/static/html/components/component_modules/utils/utils.mjs'
 (()=>{
 
@@ -61,7 +60,7 @@ export default  (obj, func, ...args)=>{
             case 'set':
                 (async (obj, props,data) => {
                     try {
-                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'editor':
                                 (async (obj, props,data) => {
