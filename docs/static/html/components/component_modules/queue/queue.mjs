@@ -3,6 +3,8 @@ import description from '/static/html/components/component_modules/description/d
 import colorlog from '/static/html/components/component_modules/colorLog/colorLog.mjs'
 import actions from '/static/html/components/component_modules/action/monopoly.mjs'
 import postoffice from '/static/html/components/component_modules/action/postOffice.mjs'
+import waves from '/static/html/components/component_modules/action/waves.mjs'
+import emoji from '/static/html/components/component_modules/emoji/emoji.mjs'
 let object = {}
 object.staticProperty = []
 let output = {}
@@ -18,16 +20,12 @@ object.setEventsAction = async (views, property, color, substrate, relation) => 
             case 'authtorization':
                 resolve(await postoffice(views,property,color,substrate,relation))
                 break
+            case 'bank':
+                resolve(await waves(views,property,color,substrate,relation))
+                break
             default:
-
-                console.warn(`queue.mjs ---> нет акшена на это отношение ---> ${relation}`)
-                resolve(await colorlog(views,{
-                    end:true,
-                    error:`queue.mjs ---> нет акшена на это отношение ---> ${relation}`
-                },color, {
-                    property:property,
-                    substrate:substrate
-                }, relation ))
+                console.warn(`${emoji('kissing_heart')} queue.mjs ---> нет акшена на это отношение ---> ${relation}`)
+                resolve(true)
                 break
         }
     })

@@ -2,6 +2,7 @@ import action from '/static/html/components/component_modules/action/action.mjs'
 import store from '/static/html/components/component_modules/staticProperty/staticProperty.mjs'
 import staticProperty from '/static/html/components/component_modules/staticProperty/staticProperty.mjs'
 import templateItem from '/static/html/components/component_modules/template/template.mjs'
+import loader from '/static/html/components/component_modules/loader/loader.mjs'
 customElements.define('fiat-form',
     class extends HTMLElement {
       static get observedAttributes () {
@@ -756,10 +757,10 @@ customElements.define('fiat-form',
             type:'obj'
           }, 'set', 'type')
 
-          let script = document.createElement('script')
-          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js'
-          obj['this'].shadowRoot.appendChild(script)
-          script.onload = function() {
+           await loader('https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js')
+          // let script = document.createElement('script')
+          // script.src = 'https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js'
+          // obj['this'].shadowRoot.appendChild(script)
 
             const name = obj['this'].shadowRoot.querySelector('#name');
             const cardnumber = obj['this'].shadowRoot.querySelector('#cardnumber');
@@ -1036,7 +1037,7 @@ customElements.define('fiat-form',
               obj['this'].shadowRoot.querySelector('.creditcard').classList.add('flipped');
             });
 
-          }
+
         }
       }
     })

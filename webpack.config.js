@@ -5,8 +5,8 @@ module.exports = {
     },
     output: {
         path: __dirname + "/temp",
-        filename: 'waves.mjs',
-        chunkFilename: 'waves.mjs',
+        filename: 'waves-bundle.mjs',
+        chunkFilename: 'waves-bundle.mjs',
         library: 'waves'
     }
 };

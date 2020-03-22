@@ -9,6 +9,7 @@
   "scripts": {
     "waves": "nodemon --experimental-modules --experimental-json-modules server.mjs",
     "start": "node --experimental-modules server.mjs",
+    "build": "webpack",
     "gulp-watch-slyle": "gulp gulp-watch-slyle",
     "gulp-bundle-waves": "gulp gulp-bundle-waves",
     "gulp": "gulp",

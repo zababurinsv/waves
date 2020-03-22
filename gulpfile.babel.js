@@ -34,13 +34,13 @@ gulp.task('gulp.build', function (cb) {
 });
 
 gulp.task(`gulp.replace`, function () {
-    return  gulp.src(`./temp/waves.mjs`)
+    return  gulp.src(`./temp/waves-bundle.mjs`)
         .pipe(replace('','', callback))
         .pipe(gulp.dest(`./temp`));
 });
 
 gulp.task('gulp.minify', function() {
-    return  gulp.src(['./temp/waves.mjs'])
+    return  gulp.src(['./temp/waves-bundle.mjs'])
         .pipe(minify({
             ext:{
                 src:'-origin.mjs',
@@ -48,7 +48,7 @@ gulp.task('gulp.minify', function() {
             },
             noSource: true
         }))
-        .pipe(gulp.dest('./docs/static/html/components/component_modules/bundle/waves'))
+        .pipe(gulp.dest('./docs/static/html/components/component_modules/waves/module/'))
 });
 
 gulp.task('gulp.remove.temp', function(){
