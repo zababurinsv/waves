@@ -10,8 +10,10 @@
     "waves": "nodemon --experimental-modules --experimental-json-modules server.mjs",
     "start": "node --experimental-modules server.mjs",
     "build": "webpack",
+    "build-tree": "webpack --config webpack.config.tree.js",
     "gulp-watch-slyle": "gulp gulp-watch-slyle",
     "gulp-bundle-waves": "gulp gulp-bundle-waves",
+    "gulp-bundle-tree": "gulp gulp-bundle-tree",
     "gulp": "gulp",
     "gitHub": "git status && git add -A && git commit -am 'update' && git push"
   },
@@ -32,6 +34,7 @@
     "axios": "^0.19.2",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "deep-iterator": "^1.1.0",
     "dotenv": "^8.2.0",
     "enqueue": "^1.0.2",
     "express": "^4.17.1",
@@ -39,6 +42,7 @@
     "github-oauth": "^0.2.2",
     "is-empty": "^1.2.0",
     "jimp": "^0.9.6",
+    "tree-crawl": "^1.0.5",
     "webdav": "^3.2.0"
   },
   "devDependencies": {

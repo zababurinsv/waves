@@ -1,73 +1,78 @@
 import colorlog from '/static/html/components/component_modules/colorLog/colorLog.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty_t.mjs'
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs'
+import Recursion from '/static/html/components/component_modules/recursion/recursion.mjs'
+import treeBundle from '/static/html/components/component_modules/recursion/module/tree-bundle.mjs'
+import Waves from '/static/html/components/component_modules/waves/module/waves-bundle.mjs'
+
 function bestCopyEver(src) {
     return Object.assign({}, src);
 }
 export default (views,property,color,substrate,relation)=>{
     return  new Promise(async (resolve, reject) => {
         color = 'action'
+        let waves = await Waves.default
+        let  recursion = await  Recursion()
         switch (relation.toLowerCase()) {
-            case 'button':
-                let json = (await Json(views))
-                let selected = await json.select(substrate)
-                let jsonTemplate = {}
-                if(property.hasOwnProperty('property')){
-                    jsonTemplate = await json.transformWith(property.property, false, selected)
-                }else{
-                    jsonTemplate = await json.transformWith(property, false, selected)
-                }
-                let button = await json.root(jsonTemplate)
-                await colorlog(views,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',color, button, relation )
-                document.dispatchEvent( new CustomEvent('actionButton', {
-                    detail: {
-                        _:'button',
-                        button
-                    }
-                }))
-                break
-            case 'player':
-                (async (views,property,color,substrate,relation)=>{
-
-                    let json = (await Json(views))
-                    let selected = await json.select(substrate)
-                    let jsonTemplate = {}
-                    if(property.hasOwnProperty('property')){
-                        jsonTemplate = await json.transformWith(property.property, false, selected)
-                    }else{
-                        jsonTemplate = await json.transformWith(property, false, selected)
-                    }
-                    let button = await json.root(jsonTemplate)
-                    await colorlog(views,'~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',color, button, relation )
-                    document.dispatchEvent( new CustomEvent('actionButton', {
-                        detail: {
-                            _:'button',
-                            button
-                        }
-                    }))
-
-                })(views,property,color,substrate,relation)
-                break
-            case 'authtorization':
-                (async (views,property,color,substrate,relation)=>{
-                    if(isEmpty(substrate[`${relation}`])){
-                        console.warn('субстрат не определён ---> ',  substrate)
-                    }else{
-
-                    }
-                })(views,property,color,substrate,relation)
-                break
             case 'bank':
-                (async (views,property,color,substrate,relation)=>{
                     if(isEmpty(substrate[`${relation}`])){
                         console.warn(`${emoji('kissing_heart')} субстрат не определён --->`,  substrate)
                     }else{
-                        for(let key in substrate)
+                        let dAppData = {}
+                        switch (substrate[`${relation}`]['/']) {
+                            case 'bank':
+                                dAppData = await waves['transactions']['nodeInteraction'].accountData(substrate[`${relation}`]['property']['dapp'], substrate[`${relation}`]['property']['testnodes'])
+                                break
+                            default:
+                                console.warn(`действие не обрабтывается ${emoji('kissing_heart')}`, substrate[`${relation}`]['/'], substrate)
+                                break
 
-                        console.assert(false, substrate, )
+                        }
+                        document.dispatchEvent( new CustomEvent('connected-bank', {
+                            detail: {
+                                '/':`${substrate[`${relation}`]['/']}`,
+                                dAppData:dAppData
+                            }
+                        }))
+                        resolve(dAppData)
+                    }
+                break
+            case 'wallet':
+                if(isEmpty(substrate[`${relation}`])){
+                    console.warn(`${emoji('kissing_heart')} субстрат не определён --->`,  substrate)
+                }else{
+                    let user = {};
+                    let balances = {};
+                    let seed = {}
+                    switch (substrate[`${relation}`]['/']) {
+                        case 'wallet':
+                            seed = waves['libs'].crypto.randomSeed(15);
+                            // console.log('seed', seed)
+                            // console.assert(false, substrate[`${relation}`]['property']['testnodes'])
+                            const signer = new waves['Signer']['default']({
+                                NODE_URL: substrate[`${relation}`]['property']['testnodes']
+                            });
+                            signer.setProvider(new waves['ProviderSeed']['default'](seed))
+                            user = await signer.login();
+                            balances = await signer.getBalance();
+                            break
+                        default:
+                            console.warn(`действие не обрабтывается ${emoji('kissing_heart')}`, substrate[`${relation}`]['/'], substrate)
+                            break
 
                     }
-                })(views,property,color,substrate,relation)
+                    document.dispatchEvent( new CustomEvent('created-wallet', {
+                        detail: {
+                            '/':`${substrate[`${relation}`]['/']}`,
+                            wallet:{
+                                user:user,
+                                balances:balances,
+                                seed:seed,
+                            }
+                        }
+                    }))
+                    resolve(true)
+                }
                 break
             default:
                 console.warn(`${emoji('kissing_heart')} waves.mjs нет обработчика --->`, relation.toLowerCase(), '[(' ,views,property,color,substrate,relation ,')a]')

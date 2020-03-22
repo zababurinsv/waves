@@ -23,6 +23,9 @@ object.setEventsAction = async (views, property, color, substrate, relation) => 
             case 'bank':
                 resolve(await waves(views,property,color,substrate,relation))
                 break
+            case 'wallet':
+                resolve(await waves(views,property,color,substrate,relation))
+                break
             default:
                 console.warn(`${emoji('kissing_heart')} queue.mjs ---> нет акшена на это отношение ---> ${relation}`)
                 resolve(true)
@@ -59,9 +62,12 @@ let handler = {
                                     }
                                 }))
                             }else{
-                               await object.setEventsAction(obj[0].console,obj[0].property,obj[0].color, obj[0].substrate, obj[0].relation)
+                                // console.assert(false)
+                                await object.setEventsAction(obj[0].console,obj[0].property,obj[0].color, obj[0].substrate, obj[0].relation)
                                 colorlog(obj[0].console,obj[0].property,obj[0].color, obj[0].substrate, obj[0].relation )
+
                             }
+
                             obj.shift()
                             timerId = setTimeout(tick, 10);
                         }

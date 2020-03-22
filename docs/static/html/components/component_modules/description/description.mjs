@@ -124,6 +124,24 @@ export default (...args)=>{
                             })
                         }
                         break
+                    case 'wallet':
+                        if(isNotEmptyActions(object['action'][`${object.description.relation}`], object)){
+
+
+                            sendToQueue(object['action'][`${object['description']['relation']}`])
+
+                        }else{
+                            object.description.substrate.queue.push({
+                                _:object.description.substrate._,
+                                end: true,
+                                console:object.description.console,
+                                property:object.description.property,
+                                color: object.description.color,
+                                substrate: object.description.substrate,
+                                relation:object.description.relation,
+                            })
+                        }
+                        break
                     default:
                         console.warn(`${emoji('bank')} description.mjs не обрабатывается добавление в очередь --->`,object.description.relation.toLowerCase(),'--->', object )
                         break
