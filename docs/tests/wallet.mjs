@@ -13,7 +13,7 @@ waves.then((waves)=>{
     object.client = []
     object.client.alice = '3MvegjWphvbYgEgQmqJiJhYWXnqPNTpieVc'
 
-    describe('post office test suite', async function () {
+    describe('Post office test suite', async function () {
         this.timeout(10000);
 
         before(async function () {
@@ -21,7 +21,7 @@ waves.then((waves)=>{
             console.thinking('(((~~~))) waves (((~~~)))',emoji('thinking'), waves)
         });
 
-        it('connect bank(подключение банка)', function () {
+        it('Connect bank(подключение банка)', function () {
             return new Promise(function (resolve, reject) {
                 waves.bank(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
                 document.addEventListener('connected-bank',async (event)=>{
@@ -41,7 +41,7 @@ waves.then((waves)=>{
             })
         })
 
-        it('create wallet(создание кошелька)', function () {
+        it('Create wallet(создание кошелька)', function () {
             return new Promise(function (resolve, reject) {
                 waves.wallet(true, `${emoji('thinking')} какие то свойства`, '3', actions, 'wallet')
                 document.addEventListener('created-wallet', async (event) => {
@@ -58,9 +58,9 @@ waves.then((waves)=>{
                 })
             })
         })
-        describe('save wallet', async function () {
+        describe('Save wallet', async function () {
 
-            it('send wallet(сохранение кошелька)', function () {
+            it('Send wallet(сохранение кошелька)', function () {
                 return new Promise(async (resolve, reject)=>{
                     let scrollWidth = Math.max(
                         document.body.scrollWidth, document.documentElement.scrollWidth,
@@ -76,6 +76,16 @@ waves.then((waves)=>{
                             event.source.postMessage({key:'value'},'http://localhost:5401')
                         }
                     });
+
+                })
+            })
+
+            it('Faucet for wallet(перевод средств на кошелёк)', function () {
+                return new Promise(async (resolve, reject)=>{
+                    waves.faucet(true, `${emoji('thinking')} какие то свойства`, '3', actions, 'faucet')
+
+
+
 
                 })
             })

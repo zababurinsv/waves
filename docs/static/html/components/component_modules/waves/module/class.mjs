@@ -4,8 +4,12 @@ let Class = class Waves {
     constructor(self) {
         this.bank = this.bank.bind(this)
         this.wallet = this.wallet.bind(this)
+        this.faucet = this.faucet.bind(this)
         this.end = this.end.bind(this)
         document.addEventListener('typeScript-end', this.end)
+    }
+    faucet(console = true,property='a',color = 'black', substrat={_:'button'},relation='button'  ){
+        return queue(console, property,color,substrat,relation)
     }
     bank(console = true,property='a',color = 'black', substrat={_:'button'},relation='button'  ){
         return queue(console, property,color,substrat,relation)
