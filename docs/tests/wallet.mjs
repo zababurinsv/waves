@@ -2,6 +2,9 @@ import Waves from '/static/html/components/component_modules/waves/waves.mjs'
 import actions from '/static/html/components/component_modules/relation/waves.mjs'
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
 let waves =  Waves()
+let testObject = {}
+testObject.staticProperty = {}
+testObject.staticProperty.wallet = []
 waves.then((waves)=>{
     const wvs = 10 ** 8;
     let object = {}
@@ -18,7 +21,7 @@ waves.then((waves)=>{
             console.thinking('(((~~~))) waves (((~~~)))',emoji('thinking'), waves)
         });
 
-        it('connect bank', function () {
+        it('connect bank(подключение банка)', function () {
             return new Promise(function (resolve, reject) {
                 waves.bank(true, `${emoji('thinking')} какие то свойства`,'3', actions,'bank')
                 document.addEventListener('connected-bank',async (event)=>{
@@ -38,13 +41,14 @@ waves.then((waves)=>{
             })
         })
 
-        it('create wallet', function () {
+        it('create wallet(создание кошелька)', function () {
             return new Promise(function (resolve, reject) {
                 waves.wallet(true, `${emoji('thinking')} какие то свойства`, '3', actions, 'wallet')
                 document.addEventListener('created-wallet', async (event) => {
                     switch (event['detail']['/']) {
                         case 'wallet':
-                            console.log(`${emoji(`dancer`)}`, event.detail.wallet.user, `${emoji(`dancer`)}`)
+                            testObject.staticProperty.wallet = event.detail
+                            console.log(`${emoji(`dancer`)}`, event.detail, `${emoji(`dancer`)}`)
                             break
                         default:
                             console.warn(`${emoji('thinking')}результат не обрабатывается${emoji('thinking')}`, event['detail']['/'], event['detail'])
@@ -53,6 +57,29 @@ waves.then((waves)=>{
                     resolve(event.detail.wallet)
                 })
             })
+        })
+        describe('save wallet', async function () {
+
+            it('send wallet(сохранение кошелька)', function () {
+                return new Promise(async (resolve, reject)=>{
+                    let scrollWidth = Math.max(
+                        document.body.scrollWidth, document.documentElement.scrollWidth,
+                        document.body.offsetWidth, document.documentElement.offsetWidth,
+                        document.body.clientWidth, document.documentElement.clientWidth
+                    );
+                    window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
+                    window.addEventListener("message", (event) => {
+                        console.log('connect', event.data)
+                        if(event.data.file === 'true'){
+                            resolve(true)
+                        }else{
+                            event.source.postMessage({key:'value'},'http://localhost:5401')
+                        }
+                    });
+
+                })
+            })
+
         })
     })
 })
