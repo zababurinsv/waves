@@ -82,10 +82,20 @@ waves.then((waves)=>{
 
             it('Faucet for wallet(перевод средств на кошелёк)', function () {
                 return new Promise(async (resolve, reject)=>{
-                    waves.faucet(true, `${emoji('thinking')} какие то свойства`, '3', actions, 'faucet')
-
-
-
+                    let scrollWidth = Math.max(
+                        document.body.scrollWidth, document.documentElement.scrollWidth,
+                        document.body.offsetWidth, document.documentElement.offsetWidth,
+                        document.body.clientWidth, document.documentElement.clientWidth
+                    );
+                    window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
+                    window.addEventListener("message", (event) => {
+                        console.log('connect', event.data)
+                        if(event.data.file === 'true'){
+                            resolve(true)
+                        }else{
+                            event.source.postMessage({key:'value'},'http://localhost:5401')
+                        }
+                    });
 
                 })
             })

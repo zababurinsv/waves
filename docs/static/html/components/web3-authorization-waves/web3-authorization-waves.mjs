@@ -1,5 +1,3 @@
-import ConsoleLogHTML from '/static/html/components/component_modules/console/console.mjs'
-import Tests from '/static/html/components/component_modules/tests/tests.mjs'
 import Waves  from '/static/html/components/component_modules/bundle/waves/waves.mjs'
 
 customElements.define('web3-authorization-waves',
@@ -713,10 +711,7 @@ customElements.define('web3-authorization-waves',
                   })
             })
         async function modules (obj) {
-          // ConsoleLogHTML.connect(document.body.querySelector('#mocha'));
-
           let waves = Waves['default']
-          await Tests()
 
 
           // const seed = waves['libs'].crypto.randomSeed(15);
