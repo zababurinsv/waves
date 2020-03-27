@@ -37,7 +37,7 @@ let Class = class Post {
                         verify = true
                         break
                     default:
-                        console.log(`${emoji('rage')} not Allowed`, event.origin)
+                        console.log(`${emoji('rage')} Not Allowed`, event.origin)
                         break
                 }
                 if(event.data.status === 'true'){
@@ -49,30 +49,24 @@ let Class = class Post {
             window.open(`${path}`,`${relation}`,`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
         })
     }
-    listener(){
+    listener(access= ''){
         let path =this.path
         return new Promise(async function (resolve, reject) {
             if(location.pathname === '/post'){
                 try {
                     window.addEventListener ("message", (event) => {
                         let verify = false
-                        switch (event.origin) {
-                            case 'http://localhost:5401':
-                                verify = true
-                                break
-                            case 'http://localhost:7030':
-                                console.log(`${emoji('smile')} resolved`, event.data)
-                                if(isEmpty(event.data.view)) console.assert(false,`${emoji('thinking')} нет аргумента view`)
-                                if(isEmpty(event.data.property)) console.assert(false,`${emoji('thinking')} нет аргумента property`)
-                                if(isEmpty(event.data.color)) console.assert(false,`${emoji('thinking')} нет аргумента color`)
-                                if(isEmpty(event.data.substrat)) console.assert(false,`${emoji('thinking')} нет аргумента substrat`)
-                                if(isEmpty(event.data.relation)) console.assert(false,`${emoji('thinking')} нет аргумента relation`)
-                                // queue(event.data.view, property,color,substrat,relation)
-                                verify = true
-                                break
-                            default:
-                                console.log(`${emoji('rage')} not resolved`, event.origin)
-                                break
+                        if(event.origin === access){
+                            console.log(`${emoji('smile')} resolved`, event.data)
+                            if(isEmpty(event.data.view)) console.assert(false,`${emoji('thinking')} нет аргумента view`)
+                            if(isEmpty(event.data.property)) console.assert(false,`${emoji('thinking')} нет аргумента property`)
+                            if(isEmpty(event.data.color)) console.assert(false,`${emoji('thinking')} нет аргумента color`)
+                            if(isEmpty(event.data.substrat)) console.assert(false,`${emoji('thinking')} нет аргумента substrat`)
+                            if(isEmpty(event.data.relation)) console.assert(false,`${emoji('thinking')} нет аргумента relation`)
+                            queue(event.data.view, event.data.property,event.data.color,event.data.substrat,event.data.relation)
+                            verify = true
+                        }else{
+                            console.log(`${emoji('rage')} not allowed`, event.origin)
                         }
                         if(verify){
                             document.dispatchEvent( new CustomEvent('post-end', {
