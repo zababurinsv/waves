@@ -52,13 +52,13 @@
 <script type="module" src="./static/html/components/waves-auth/waves-auth.mjs"></script>
 <script type="module" src="./static/html/components/waves-balance/waves-balance.mjs"></script>
 <script type="module">
-    import Post from '/static/html/components/component_modules/postMessage/postMessage.mjs'
+    // import Post from '/static/html/components/component_modules/postMessage/postMessage.mjs'
     import Tests from '/static/html/components/component_modules/tests/tests.mjs'
     // import ConsoleLogHTML from '/static/html/components/component_modules/console/console.mjs'
     // ConsoleLogHTML.connect(document.body.querySelector('#mocha'));
     window.onload = async () => {
-        let post = await Post()
-        await post.listener()
+        // let post = await Post()
+        // await post.listener()
         await Tests()
     }
 </script>

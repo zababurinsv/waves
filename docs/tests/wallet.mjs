@@ -1,6 +1,7 @@
 import Waves from '/static/html/components/component_modules/waves/waves.mjs'
 import actions from '/static/html/components/component_modules/relation/waves.mjs'
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
+import Post from '/static/html/components/component_modules/postMessage/postMessage.mjs'
 let waves =  Waves()
 let testObject = {}
 testObject.staticProperty = {}
@@ -13,7 +14,7 @@ waves.then((waves)=>{
     object.client = []
     object.client.alice = '3MvegjWphvbYgEgQmqJiJhYWXnqPNTpieVc'
 
-    describe('Post office test suite', async function () {
+    describe('blockchain-waves', async function () {
         this.timeout(10000);
 
         before(async function () {
@@ -59,44 +60,44 @@ waves.then((waves)=>{
             })
         })
         describe('Save wallet', async function () {
-
             it('Send wallet(сохранение кошелька)', function () {
                 return new Promise(async (resolve, reject)=>{
-                    let scrollWidth = Math.max(
-                        document.body.scrollWidth, document.documentElement.scrollWidth,
-                        document.body.offsetWidth, document.documentElement.offsetWidth,
-                        document.body.clientWidth, document.documentElement.clientWidth
-                    );
-                    window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
-                    window.addEventListener("message", (event) => {
-                        console.log('connect', event.data)
-                        if(event.data.file === 'true'){
-                            resolve(true)
-                        }else{
-                            event.source.postMessage({key:'value'},'http://localhost:5401')
-                        }
-                    });
-
+                    let post = await Post('')
+                    resolve(await post.windows('http://localhost:5401/post',true, 'property', '2', 'substrate', 'relation'))
+                    // let scrollWidth = Math.max(
+                    //     document.body.scrollWidth, document.documentElement.scrollWidth,
+                    //     document.body.offsetWidth, document.documentElement.offsetWidth,
+                    //     document.body.clientWidth, document.documentElement.clientWidth
+                    // );
+                    // window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
+                    // window.addEventListener("message", (event) => {
+                    //     console.log('connect', event.data)
+                    //     if(event.data.file === 'true'){
+                    //         resolve(true)
+                    //     }else{
+                    //         event.source.postMessage({key:'value'},'http://localhost:5401')
+                    //     }
+                    // });
                 })
             })
 
             it('Faucet for wallet(перевод средств на кошелёк)', function () {
                 return new Promise(async (resolve, reject)=>{
-                    let scrollWidth = Math.max(
-                        document.body.scrollWidth, document.documentElement.scrollWidth,
-                        document.body.offsetWidth, document.documentElement.offsetWidth,
-                        document.body.clientWidth, document.documentElement.clientWidth
-                    );
-                    window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
-                    window.addEventListener("message", (event) => {
-                        console.log('connect', event.data)
-                        if(event.data.file === 'true'){
-                            resolve(true)
-                        }else{
-                            event.source.postMessage({key:'value'},'http://localhost:5401')
-                        }
-                    });
-
+                    // let scrollWidth = Math.max(
+                    //     document.body.scrollWidth, document.documentElement.scrollWidth,
+                    //     document.body.offsetWidth, document.documentElement.offsetWidth,
+                    //     document.body.clientWidth, document.documentElement.clientWidth
+                    // );
+                    // window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
+                    // window.addEventListener("message", (event) => {
+                    //     console.log('connect', event.data)
+                    //     if(event.data.file === 'true'){
+                    //         resolve(true)
+                    //     }else{
+                    //         event.source.postMessage({key:'value'},'http://localhost:5401')
+                    //     }
+                    // });
+                    resolve(true)
                 })
             })
 

@@ -3,14 +3,15 @@ import queue from '/static/html/components/component_modules/queue/queue.mjs'
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty_t.mjs'
 import emoji from '/static/html/components/component_modules/emoji/emoji.mjs';
 let Class = class Post {
-    constructor(self) {
-        this.iframe = this.iframe.bind(this)
-        this.window = this.window.bind(this)
+    constructor(path) {
+        this.iframes = this.iframes.bind(this)
+        this.windows = this.windows.bind(this)
         this.listener = this.listener.bind(this)
         this.end = this.end.bind(this)
-        document.addEventListener('typeScript-end', this.end)
+        this.path = path
+        document.addEventListener('post-end', this.end)
     }
-    iframe(view = true,property='',color = 'black', substrat={},relation=''  ){
+    iframes(view = true,property='',color = 'black', substrat={},relation=''  ){
         return new Promise(async function (resolve, reject) {
 
             let scrollWidth = Math.max(
@@ -19,67 +20,83 @@ let Class = class Post {
                 document.body.clientWidth, document.documentElement.clientWidth
             );
             window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
-            window.addEventListener("message", (event) => {
-                console.log('connect', event.data)
-                if(event.data.file === 'true'){
-                    resolve(true)
-                }else{
-                    event.source.postMessage({key:'value'},'http://localhost:5401')
-                }
-            });
-
         })
     }
-    window(view = true,property='',color = 'black', substrat={},relation=''  ){
+    windows(path='',view = true,property='',color = 'black', substrat={},relation=''  ){
         return new Promise(async function (resolve, reject) {
-
             let scrollWidth = Math.max(
                 document.body.scrollWidth, document.documentElement.scrollWidth,
                 document.body.offsetWidth, document.documentElement.offsetWidth,
                 document.body.clientWidth, document.documentElement.clientWidth
             );
-            window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
             window.addEventListener("message", (event) => {
-                console.log('connect', event.data)
-                if(event.data.file === 'true'){
+                let verify = false
+                switch (event.origin) {
+                    case 'http://localhost:5401':
+                        console.log(`${emoji('smile')} response`,event.data.status)
+                        verify = true
+                        break
+                    default:
+                        console.log(`${emoji('rage')} not Allowed`, event.origin)
+                        break
+                }
+                if(event.data.status === 'true'){
                     resolve(true)
                 }else{
-                    event.source.postMessage({key:'value'},'http://localhost:5401')
+                    event.source.postMessage({view:view,property:property,color:color,substrat:substrat,relation:relation },`${path}/post`)
                 }
             });
-
+            window.open(`${path}`,`${relation}`,`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
         })
     }
-    listener(id){
+    listener(){
+        let path =this.path
         return new Promise(async function (resolve, reject) {
             if(location.pathname === '/post'){
-                if(!isEmpty(window.opener)){
-                    let msg = { '/': `${id}`, connect: true };
-                    window.opener.postMessage(msg, 'http://localhost:7030/')
-                    window.opener.focus();
+                try {
                     window.addEventListener ("message", (event) => {
-                        if(event.origin==='http://localhost:7030'){
-                            console.log('~~~~~~~~~~~~~~ response ~~~~~~~~~~~~~~', event.data)
-                            if(isEmpty(event.data.view)) console.assert(false,`${emoji('thinking')} нет аргумента view`)
-                            if(isEmpty(event.data.property)) console.assert(false,`${emoji('thinking')} нет аргумента property`)
-                            if(isEmpty(event.data.color)) console.assert(false,`${emoji('thinking')} нет аргумента color`)
-                            if(isEmpty(event.data.substrat)) console.assert(false,`${emoji('thinking')} нет аргумента substrat`)
-                            if(isEmpty(event.data.relation)) console.assert(false,`${emoji('thinking')} нет аргумента relation`)
-                            queue(event.data.view, property,color,substrat,relation)
-
+                        let verify = false
+                        switch (event.origin) {
+                            case 'http://localhost:5401':
+                                verify = true
+                                break
+                            case 'http://localhost:7030':
+                                console.log(`${emoji('smile')} resolved`, event.data)
+                                if(isEmpty(event.data.view)) console.assert(false,`${emoji('thinking')} нет аргумента view`)
+                                if(isEmpty(event.data.property)) console.assert(false,`${emoji('thinking')} нет аргумента property`)
+                                if(isEmpty(event.data.color)) console.assert(false,`${emoji('thinking')} нет аргумента color`)
+                                if(isEmpty(event.data.substrat)) console.assert(false,`${emoji('thinking')} нет аргумента substrat`)
+                                if(isEmpty(event.data.relation)) console.assert(false,`${emoji('thinking')} нет аргумента relation`)
+                                // queue(event.data.view, property,color,substrat,relation)
+                                verify = true
+                                break
+                            default:
+                                console.log(`${emoji('rage')} not resolved`, event.origin)
+                                break
+                        }
+                        if(verify){
+                            document.dispatchEvent( new CustomEvent('post-end', {
+                                detail: {
+                                    origin:event.origin
+                                }
+                            }))
                         }
                     })
+                    let msg = { '/': `${location.host}`, connect: true };
+                    window.opener.postMessage(msg, `${path}`)
+                    window.opener.focus();
+                }catch (e) {
+                    resolve({status:false, err: e})
                 }
+            }else{
+                resolve({status:false})
             }
-            resolve({status:true})
         })
     }
     end(event){
-        queue(event['detail']['console'], '~end',event['detail']['color'],event['detail']['substrate'],event['detail']['relation']).then((data)=>{
-
-            colorlog(true, 'stat','stat',data, 'статистика')
-
-        })
+        console.log(`${emoji('smile')} send`, event.detail.origin)
+        window.opener.postMessage({status:'true'}, `${event.detail.origin}`)
+        window.close()
     }
     get self() {
         return object

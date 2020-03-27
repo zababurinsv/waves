@@ -1,10 +1,10 @@
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty_t.mjs'
 import Class from '/static/html/components/component_modules/postMessage/module/class.mjs'
-export default (obj = {_:'type'})=>{
+export default (obj = undefined)=>{
     return new Promise( async (resolve, reject) =>{
         let object = {}
         object.staticProperty = {}
-        object.staticProperty.class = undefined
+        object.staticProperty.class = {}
         let out = (obj) => {
             resolve(obj)
         }
@@ -12,12 +12,18 @@ export default (obj = {_:'type'})=>{
             reject(error)
         }
         try {
-            object['class'] = ()=>{
-                if(isEmpty(object.staticProperty.class)){ object.staticProperty.class = new Class() }
-                return object.staticProperty.class
+            if(obj === undefined){
+                console.assert(false,'Что бы объявить класс надо указать откуда он будет ждать сообщение' )
+                err({
+                    _:'type',
+                    error:'Что бы объявить класс надо указать откуда он будет ждать сообщение'
+                })
+            }else{
+                object.staticProperty.class[`${obj}`] = {}
+                object.staticProperty.class[`${obj}`] = new Class(obj)
+                out(object.staticProperty.class[`${obj}`])
             }
-            if(isEmpty(object.staticProperty.class)){ object.staticProperty.class = new Class() }
-            out(object.staticProperty.class)
+
         }catch (e) {
             err({
                 _:'type',
