@@ -22,7 +22,7 @@ let Class = class Post {
             window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
         })
     }
-    windows(path='',view = true,property='',color = 'black', substrat={},relation=''  ){
+    windows(host='',path='',view = true,property='',color = 'black', substrate={},relation=''  ){
         return new Promise(async function (resolve, reject) {
             let scrollWidth = Math.max(
                 document.body.scrollWidth, document.documentElement.scrollWidth,
@@ -30,23 +30,28 @@ let Class = class Post {
                 document.body.clientWidth, document.documentElement.clientWidth
             );
             window.addEventListener("message", (event) => {
-                let verify = false
-                switch (event.origin) {
-                    case 'http://localhost:5401':
-                        console.log(`${emoji('smile')} response`,event.data.status)
-                        verify = true
-                        break
-                    default:
-                        console.log(`${emoji('rage')} Not Allowed`, event.origin)
-                        break
-                }
-                if(event.data.status === 'true'){
-                    resolve(true)
+                if(event.origin === host){
+                    console.log(`${emoji('smile')} response`,event.data)
+                    if(event.data.status === 'true'){
+                        resolve(true)
+                    }else{
+                        for(let key in substrate ){
+                            if(key !== relation){
+                              delete substrate[key]
+                            }
+                        }
+                        if(Object.keys(substrate).length > 1){
+                            console.warn(`${emoji('rage')} class.mjs postMessage у объекта должно быть одно свойтсво --->`, substrate)
+                        }else if(Object.keys(substrate).length === 0){
+                            console.warn(`${emoji('rage')} class.mjs postMessage субстран не посылается, может быть он существует на стороне обработчика --->`, substrate)
+                        }
+                        event.source.postMessage({view:view,property:property,color:color,substrate:substrate,relation:relation },event.origin)
+                    }
                 }else{
-                    event.source.postMessage({view:view,property:property,color:color,substrat:substrat,relation:relation },`${path}/post`)
+                    console.log(`${emoji('rage')} Not Allowed`, event.origin, '--->' ,event)
                 }
             });
-            window.open(`${path}`,`${relation}`,`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
+            window.open(`${host}${path}`,`${relation}`,`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
         })
     }
     listener(access= ''){
