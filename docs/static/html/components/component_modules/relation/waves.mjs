@@ -38,9 +38,7 @@ export default {
             '/':'dispatchEvent',
             'items':'connectGitHub',
         },
-
-
-    ]
+    ],
 }
 
 

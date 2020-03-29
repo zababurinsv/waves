@@ -60,36 +60,62 @@ waves.then((waves)=>{
                 })
             })
         })
+
         describe('Save wallet', async function () {
             it('Send wallet(сохранение кошелька)', function () {
                 return new Promise(async (resolve, reject)=>{
-                    let post = await Post('')
-                    resolve(await post.windows('http://localhost:5401','/post',true, `${emoji('pouting_woman')}`, '2',substrate, 'save-wallet'))
+                   let post = await Post('save-wallet')
+                   await post.windows('http://localhost:5401','/post',true, `${emoji('pouting_woman')}`, '2',substrate, 'save-wallet')
+
+                    resolve(true)
                 })
             })
 
             it('Faucet for wallet(перевод средств на кошелёк)', function () {
                 return new Promise(async (resolve, reject)=>{
-                    resolve(await post.windows('http://localhost:5401','/post',true, `${emoji('pouting_woman')}`, '2',substrate, 'save-wallet'))
-
-                    // let scrollWidth = Math.max(
-                    //     document.body.scrollWidth, document.documentElement.scrollWidth,
-                    //     document.body.offsetWidth, document.documentElement.offsetWidth,
-                    //     document.body.clientWidth, document.documentElement.clientWidth
-                    // );
-                    // window.open(`http://localhost:5401`,'github',`height=${scrollWidth/3},width=${scrollWidth/1.5},scrollbars=no,toolbar=no,menubar=no,status=no,resizable=no,scrollbars=no,location=no,top=${scrollWidth/2-((scrollWidth/1.5)/2)},left=${scrollWidth/2-((scrollWidth/1.8)/2)}`);
-                    // window.addEventListener("message", (event) => {
-                    //     console.log('connect', event.data)
-                    //     if(event.data.file === 'true'){
-                    //         resolve(true)
-                    //     }else{
-                    //         event.source.postMessage({key:'value'},'http://localhost:5401')
-                    //     }
-                    // });
+                    let post = await Post('faucet-wallet')
+                    let tx = await post.windows('http://localhost:8020','/post',true, `${emoji('pouting_woman')}`, '2',{'faucet-wallet': [{address:'3MvegjWphvbYgEgQmqJiJhYWXnqPNTpieVc'}]}, 'faucet-wallet')
+                    console.log(`${emoji('tiger')} --->`, tx.data.data.tx.id)
+                    await waves.waitForTx(tx.data.data.tx.id,{
+                        apiBase:'https://nodes-testnet.wavesnodes.com'
+                    })
+                    console.log(`${emoji('beer')} --->`, tx.data.data.tx)
                     resolve(true)
                 })
             })
 
+            describe('Create game (создать игру)', async function () {
+
+                it('Create ID(создать ID)', function () {
+                    return new Promise(async (resolve, reject)=>{
+                        reject(true)
+                    })
+                })
+
+                it('Create Network Interface (создать интерфейс игры)', function () {
+                    return new Promise(async (resolve, reject)=>{
+
+                        reject(true)
+
+                    })
+                })
+
+                it('Create Player (создать игрока)', function () {
+                    return new Promise(async (resolve, reject)=>{
+
+                        reject(true)
+
+                    })
+                })
+
+                it('Create Board (создать доску)', function () {
+                    return new Promise(async (resolve, reject)=>{
+
+                        reject(true)
+
+                    })
+                })
+            })
         })
     })
 })

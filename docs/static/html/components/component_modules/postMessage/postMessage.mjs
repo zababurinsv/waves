@@ -18,6 +18,8 @@ export default (obj = undefined)=>{
                     _:'type',
                     error:'Что бы объявить класс надо указать откуда он будет ждать сообщение'
                 })
+            }else if(obj.class === true){
+                out(object.staticProperty.class)
             }else{
                 object.staticProperty.class[`${obj}`] = {}
                 object.staticProperty.class[`${obj}`] = new Class(obj)
