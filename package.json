@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "waves": "nodemon --experimental-modules --experimental-json-modules server.mjs",
+    "blockchain-waves": "nodemon --experimental-modules --experimental-json-modules server.mjs",
     "start": "node --experimental-modules server.mjs",
     "build": "webpack",
     "build-tree": "webpack --config webpack.config.tree.js",

@@ -49,7 +49,7 @@ function request(obj, path,node, method) {
 
     switch (method) {
       case 'GET':
-        // console.log('~~~~~~~~~~GET~~~~~~~~~~~~~~~~~~',`${node}${path}`)
+        console.log('~~~~~~~~~~GET~~~~~~~~~~~~~~~~~~',`${node}${path}`)
         fetch(`${node}${path}`, {
           method: method,
         }).then(function (response) {
@@ -625,7 +625,7 @@ export default {
   },
   get: (obj, props, data, ...args) => {
     return new Promise( async function (resolve, reject) {
-      // console.log(`get[(${obj['input']})${obj[props]}]`)
+      console.log(`get[(${obj['input']})${obj[props]}]`)
       switch (obj[props]) {
         case 'jsonPhoto':
           resolve(await webdav(obj, '/getList', conf['store']['web'], 'GET'))

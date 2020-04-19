@@ -33,7 +33,7 @@ export default  (obj, func, ...args)=>{
                 case 'add':
                     (async (obj, props,data) => {
                         try {
-                            // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                            console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                             switch (obj[props]) {
                                 case 'lacerta-moderator':
                                     (async (obj, props,data) => {
@@ -688,7 +688,7 @@ export default  (obj, func, ...args)=>{
                 case 'set':
                     (async (obj, props,data) => {
                         try {
-                            // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                            console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                             switch (obj[props]) {
                                 case 'reg':
                                     (async (obj, props,data) => {

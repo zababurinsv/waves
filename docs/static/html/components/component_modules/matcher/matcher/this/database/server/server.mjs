@@ -1,8 +1,10 @@
 import conf from '/static/html/components/component_modules/matcher/matcher/this/database/config/index.mjs'
-import loader from '/static/html/components/component_modules/loader/loader.mjs'
+import template from '/static/html/components/component_modules/template/template.mjs'
+import utils from '/static/html/components/component_modules/utils/utils.mjs'
 function server(obj, path,node, method) {
-    return new Promise(async (resolve, reject) => {
-        let axios = await loader('https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js','axios')
+    return new Promise((resolve, reject) => {
+        bundle['default'](obj,'export', async function (error, config) {
+
             function setData( data) {
                 return new Promise((resolve, reject) => {
                     let formData  = new FormData();
@@ -14,8 +16,8 @@ function server(obj, path,node, method) {
             }
             switch (method) {
                 case 'GET':
-                    // console.log('~~~~~~~~~~~~GET~~~~~~~~~~~~~~~~',`${node}${path}`)
-                    axios.get(`${node}${path}`)
+                    console.log('~~~~~~~~~~~~GET~~~~~~~~~~~~~~~~',`${node}${path}`)
+                    config['axios'].get(`${node}${path}`)
                         .then(function (response) {
                             obj = {}
                             obj['get_n'] = []
@@ -108,6 +110,9 @@ function server(obj, path,node, method) {
                     console.warn(`необрабатываемый тип запроса`, obj[props])
                     break
             }
+
+        })
+
     })
 }
 
@@ -125,7 +130,7 @@ export default  (obj, func, ...args)=>{
             case 'set':
                 (async (obj, props,data) => {
                     try {
-                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'auction':
                                 (async (obj, props,data) => {
@@ -155,7 +160,7 @@ export default  (obj, func, ...args)=>{
             case 'post':
                     (async (obj, props,data) => {
                         try {
-                            // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                            console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                             switch (obj[props]) {
                                 case 'account':
                                     (async (obj, props,data) => {
@@ -175,7 +180,7 @@ export default  (obj, func, ...args)=>{
             case 'get':
                 (async (obj, props,data) => {
                     try {
-                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'auctions':
                                 (async (obj, props,data) => {
@@ -231,7 +236,7 @@ export default  (obj, func, ...args)=>{
             case 'update':
                 (async (obj, props,data) => {
                     try {
-                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'account':
                                 if(!obj['path']){
@@ -250,7 +255,7 @@ export default  (obj, func, ...args)=>{
             case 'checked':
                 (async (obj, props,data) => {
                     try {
-                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'account':
                                 if(!obj['path']){
@@ -269,7 +274,7 @@ export default  (obj, func, ...args)=>{
             case 'delete':
                 (async (obj, props,data) => {
                     try {
-                        // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                        console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                         switch (obj[props]) {
                             case 'item':
                                 if(!obj['path']){

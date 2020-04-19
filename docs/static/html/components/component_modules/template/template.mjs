@@ -1,5 +1,4 @@
 import utils from '/static/html/components/component_modules/utils/utils.mjs'
-import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
 function msConversion(millis) {
     let sec = Math.floor(millis / 1000);
     let hrs = Math.floor(sec / 3600);
@@ -31,6 +30,7 @@ function msConversion(millis) {
 }
 export default async (obj, func, ...args)=>{
     return new Promise(async function (resolve, reject) {
+        bundle['default'](obj,null, async function (error, config) {
             let out = (obj) => {
                 // //console.log('~~~ out router ~~~')
                 resolve(obj)
@@ -371,7 +371,7 @@ export default async (obj, func, ...args)=>{
                 case 'get':
                     (async (obj, props,data) => {
                         try {
-                            // console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
+                            console.log(`app(${func}[(${obj['input']})${obj[props]}]property)`)
                             switch (obj[props]) {
                                 case 'auth':
                                     (async (obj, props,data) => {
@@ -584,5 +584,6 @@ export default async (obj, func, ...args)=>{
                     err(`новая функция ${func}`)
                     break
             }
+        })
     })
 }

@@ -156,7 +156,6 @@ export default  (obj, func, ...args)=>{
                                     if(isEmpty(queue.staticProperty['task'])){
                                         queue.staticProperty['task'] = []
                                         queue.staticProperty['task'] = new Proxy(queue.staticProperty['task'], handler)
-
                                     }
                                     queue.staticProperty['task'].push(obj)
                                     out({task:'push'})

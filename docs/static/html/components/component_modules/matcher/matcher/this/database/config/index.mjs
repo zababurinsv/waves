@@ -12,7 +12,7 @@ config['now']['0.6'] = 'https://soundlane-b2b652bpi.now.sh'
 
 config['mongo'] = {}
 // config['mongo']['local'] = 'http://localhost:3003'
-config['mongo']['web'] = 'https://mongo.now.sh'
+config['mongo']['web'] = 'https://mongo.zababurinsv.now.sh'
 // config['mongo']['web'] = 'http://localhost:3003'
 // config['mongo']['web'] = 'http://localhost:3003'
 
@@ -35,12 +35,12 @@ config['email']['web'] = 'https://email.zababurinsv.now.sh'
 
 config['account'] = {}
 config['account']['local'] = 'http://localhost:3009'
-config['account']['web'] = 'https://account-git-master.szababurinv.now.sh'
+config['account']['web'] = 'https://account.zababurinsv.now.sh'
 // config['account']['web'] = 'http://localhost:3009'
 
 config['account']['dappaddress'] = '3N8n4Lc8BMsPPyVHJXTivQWs7ER61bB7wQn'
 config['account']['this'] = `${config['account']['dappaddress']}?matches=`
-config['account']['testnodes'] = 'https://pool.testnet.wavesnodes.com'
+config['account']['testnodes'] = 'http://testnodes.wavesnodes.com'
 // config['account']['sse'] = 'http://localhost:3009/stream'
 config['account']['sse'] = 'https://account.zababurinsv.now.sh/stream'
 

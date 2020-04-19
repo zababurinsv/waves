@@ -711,22 +711,22 @@ customElements.define('web3-authorization-waves',
                   })
             })
         async function modules (obj) {
+          
           let waves = Waves['default']
-
 
           // const seed = waves['libs'].crypto.randomSeed(15);
 
           // address: "3N2JiCN4VrDiNxhbuhZuq5PrPzNQBYMnueR"
           // publicKey: "5oPA5A4MrQjAMoKD2KVn4zqWDWZHNBVD3r477TvjnAtS"
 
-          // const seed = 'depth purity blouse alert pet refuse sadness play flock bulk fire tired rhythm disorder mystery'
-          // const signer = new waves['Signer']['default']({
-          //   NODE_URL: 'https://pool.testnet.wavesnodes.com'
-          // });
-          //
-          // signer.setProvider(new waves['ProviderSeed']['default'](seed))
-          // const user = await signer.login();
-          // const balances = await signer.getBalance();
+          const seed = 'depth purity blouse alert pet refuse sadness play flock bulk fire tired rhythm disorder mystery'
+          const signer = new waves['Signer']['default']({
+            NODE_URL: 'https://pool.testnet.wavesnodes.com'
+          });
+
+          signer.setProvider(new waves['ProviderSeed']['default'](seed))
+          const user = await signer.login();
+          const balances = await signer.getBalance();
 
 
           // var message = "Hello World";

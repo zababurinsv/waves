@@ -1,6 +1,7 @@
 import mongodb from '/static/html/components/component_modules/matcher/matcher/this/database/mongoDb/mongodb.mjs'
 export default  (obj, func, ...args)=>{
     return new Promise( function (resolve, reject) {
+        bundle['default'](obj,'export', async function (error, config) {
             let out = (obj) => {
                 //console.log('~~~ out router ~~~')
                 resolve(obj)
@@ -281,5 +282,6 @@ export default  (obj, func, ...args)=>{
                     err(`новая функция ${func}`)
                     break
             }
+        })
     })
 }
