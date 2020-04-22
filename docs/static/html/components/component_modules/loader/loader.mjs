@@ -1,13 +1,25 @@
 import isEmpty from '/static/html/components/component_modules/isEmpty/isEmpty.mjs'
-export let style = (asyncStyleSheets='#') => {
+export let style = (url='#', target = undefined) => {
     return new Promise(function (resolve, reject) {
-        for (let i = 0; i < asyncStyleSheets.length; i++) {
-            let link = document.createElement('link');
-            link.setAttribute('rel', 'stylesheet');
-            link.setAttribute('href', asyncStyleSheets[i]);
-            document.head.appendChild(link);
-        }
+        if(typeof (target) === 'object' && target.children.length > 0){
+            let allStyle = target.querySelectorAll('style')
+            let verify = false
+            for(let i =0; i< allStyle.length;i++){
+                if(allStyle[i].innerText.indexOf(`${url}`) > 0){
+                    verify = true
+                }
+            }
+            if(verify){
 
+            }else{
+                let style = document.createElement('style')
+                style.innerHTML = `@import '${url}';`
+                target.appendChild(style);
+            }
+        }else{
+            console.assert(false, 'укажите компонент куда будет добавляться стиль')
+        }
+        resolve({style:'true'})
     })
 }
 
@@ -47,11 +59,36 @@ export let add = (url, target)=>{
 
 export default (url, name)=>{
     return new Promise(function (resolve, reject) {
-        let load = document.createElement('script');
-        load.src = url
-        document.body.appendChild(load)
-        load.onload = (out) =>{
-            resolve(window[name])
+        let verifyScript = true
+        let verifyName = name.toLowerCase()
+        let Script = {}
+        for(let item of document.body.querySelectorAll('script')){
+            if(item.src.indexOf(`${verifyName}.mjs`) > 0){
+                verifyScript =false
+                Script = item
+            }
+        }
+        if(verifyScript){
+            if( isEmpty(window[name])){
+                let load = document.createElement('script');
+                load.src = url
+                document.body.appendChild(load)
+                load.onload = (out) =>{
+                    document.dispatchEvent( new CustomEvent(`${name}-loading`))
+                    resolve(window[name])
+                }
+            }else{
+                resolve(window[name])
+            }
+        }else{
+            if( isEmpty(window[name])){
+              document.addEventListener(`${name}-loading`,()=>{
+                  resolve(window[name])
+              })
+            }else{
+                console.log('#####3#######', window[name])
+                resolve(window[name])
+            }
         }
     })
 }
