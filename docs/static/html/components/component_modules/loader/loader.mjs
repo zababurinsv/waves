@@ -59,6 +59,7 @@ export let add = (url, target)=>{
 
 export default (url, name)=>{
     return new Promise(function (resolve, reject) {
+        console.log('@@@@@@@@rrrr@@@dd@@@@@', name)
         let verifyScript = true
         let verifyName = name.toLowerCase()
         let Script = {}
