@@ -15,7 +15,8 @@
     "gulp-bundle-waves": "gulp gulp-bundle-waves",
     "gulp-bundle-tree": "gulp gulp-bundle-tree",
     "gulp": "gulp",
-    "gitHub": "git status && git add -A && git commit -am 'update' && git push"
+    "gitHub": "git status && git add -A && git commit -am 'update' && git push",
+    "kill:7030": "kill $(lsof -t -i:7030)"
   },
   "repository": {
     "type": "git",
