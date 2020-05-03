@@ -11,7 +11,6 @@ dotenv.config()
 const highWaterMark =  2;
 import whitelist from './whitelist/whitelist.mjs'
 import config from './config.mjs'
-import github from "github-oauth";
 let app = express();
 app.use(compression())
 app.use(cors({ credentials: true }));
@@ -31,34 +30,12 @@ let corsOptions = {
     }
 }
 
-var githubOAuth = github({
-    githubClient: config.GITHUB_KEY,
-    githubSecret: config.GITHUB_SECRET,
-    baseURL: 'http://localhost:' + '5401',
-    loginURI: '/auth/github',
-    callbackURI: '/auth/github/callback'
-})
-
-app.get("/auth/github", function(req, res){
-    console.log("started oauth");
-    return githubOAuth.login(req, res);
-});
-
-app.get("/auth/github/callback", function(req, res){
-    console.log("received callback");
-    return githubOAuth.callback(req, res);
-});
-githubOAuth.on('error', function(err) {
-    console.error('there was a login error', err)
-})
-
-githubOAuth.on('token', function(token, res) {
-    console.log('~~~~~~token~~~~~~~~~~~', token)
-    res.redirect('http://localhost:5401/singIn')
-})
-
 app.use( express.static('docs'));
 app.use( express.static('static'));
+app.options('/import', cors(corsOptions))
+app.get('/import', async (req, res) => {
+    res.sendFile('/docs/import.html', { root: __dirname });
+})
 app.options('/*', cors(corsOptions))
 app.get('/*', async (req, res) => {
     res.sendFile('/docs/index.html', { root: __dirname });
