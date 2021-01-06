@@ -1025,7 +1025,7 @@ customElements.define('varan-menu',
                                                     outObject['rss'] = `bid`
 
                                                     store['varan-card-news'][i]['this'].shadowRoot.querySelector('.nameBid').value = 'Наименование товара'
-                                                    store['varan-card-news'][i]['this'].shadowRoot.querySelector('.imgBidAdmin').src = './static/html/components/varan-card-news/icons/no_image.jpg'
+                                                    store['varan-card-news'][i]['this'].shadowRoot.querySelector('.imgBidAdmin').src = '/static/html/components/varan-card-news/icons/no_image.jpg'
                                                     store['varan-card-news'][i]['this'].shadowRoot.querySelector('.timerValue').value = 10
                                                     store['varan-card-news'][i]['this'].shadowRoot.querySelector('.priceValue').value = 1
 
