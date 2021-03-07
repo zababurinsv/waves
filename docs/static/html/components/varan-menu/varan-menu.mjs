@@ -681,7 +681,6 @@ customElements.define('varan-menu',
                 once = function (obj) { return obj }
             }
             async function modules (obj) {
-                    // console.log('ddddddddddd', custom)
 
                     // if (!obj['parent']) {
                     //     if (obj['this'].hasAttribute('parent') === true) {
